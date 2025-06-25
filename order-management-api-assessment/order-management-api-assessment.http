@@ -1,0 +1,6 @@
+@order_management_api_assessment_HostAddress = http://localhost:5057
+
+GET {{order_management_api_assessment_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

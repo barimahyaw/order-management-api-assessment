@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "0dDOjTyR9+L4xhpjCbGm9ZadFPN2itetX3cgTCM8cAc=",
+  "Source": "order-management-api-assessment",
+  "BasePath": "_content/order-management-api-assessment",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
