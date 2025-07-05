@@ -1,3 +1,3 @@
 ﻿<Project>
-  <Import Project="..\build\order-management-api-assessment.props" />
+  <Import Project="../build/order-management-api-assessment.props" />
 </Project>
