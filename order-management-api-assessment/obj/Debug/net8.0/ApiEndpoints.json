@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "order_management_api_assessment.Controllers.OrderController",
+    "ContainingType": "order_management_api_assessment.Controllers.OrdersController",
     "Method": "CreateOrder",
     "RelativePath": "api/orders",
     "HttpMethod": "POST",
@@ -9,20 +9,18 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "order_management_api_assessment.Controllers.CreateOrderRequest",
+        "Type": "order_management_api_assessment.DTOs.CreateOrderRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "order_management_api_assessment.Shared.Models.ApiResponse",
-        "MediaTypes": [
-          "application/json"
-        ],
+        "Type": "System.Void",
+        "MediaTypes": [],
         "StatusCode": 201
       },
       {
-        "Type": "order_management_api_assessment.Shared.Models.ApiResponse",
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
         "MediaTypes": [
           "application/json"
         ],
@@ -36,7 +34,7 @@
     ]
   },
   {
-    "ContainingType": "order_management_api_assessment.Controllers.OrderController",
+    "ContainingType": "order_management_api_assessment.Controllers.OrdersController",
     "Method": "GetOrders",
     "RelativePath": "api/orders",
     "HttpMethod": "GET",
@@ -61,7 +59,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "order_management_api_assessment.Shared.Models.ApiResponse\u00601[[order_management_api_assessment.Features.Orders.Query.GetOrders.OrdersPagedResponse, order-management-api-assessment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "order_management_api_assessment.DTOs.OrdersPagedResponse",
         "MediaTypes": [
           "application/json"
         ],
@@ -75,7 +73,7 @@
     ]
   },
   {
-    "ContainingType": "order_management_api_assessment.Controllers.OrderController",
+    "ContainingType": "order_management_api_assessment.Controllers.OrdersController",
     "Method": "GetOrder",
     "RelativePath": "api/orders/{orderId}",
     "HttpMethod": "GET",
@@ -90,14 +88,14 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "order_management_api_assessment.Shared.Models.ApiResponse\u00601[[order_management_api_assessment.Features.Orders.Query.GetOrder.OrderResponse, order-management-api-assessment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "order_management_api_assessment.DTOs.OrderResponse",
         "MediaTypes": [
           "application/json"
         ],
         "StatusCode": 200
       },
       {
-        "Type": "order_management_api_assessment.Shared.Models.ApiResponse\u00601[[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
         "MediaTypes": [
           "application/json"
         ],
@@ -111,7 +109,7 @@
     ]
   },
   {
-    "ContainingType": "order_management_api_assessment.Controllers.OrderController",
+    "ContainingType": "order_management_api_assessment.Controllers.OrdersController",
     "Method": "UpdateOrderStatus",
     "RelativePath": "api/orders/{orderId}/status",
     "HttpMethod": "PUT",
@@ -125,27 +123,25 @@
       },
       {
         "Name": "request",
-        "Type": "order_management_api_assessment.Controllers.UpdateOrderStatusRequest",
+        "Type": "order_management_api_assessment.DTOs.UpdateOrderStatusRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "order_management_api_assessment.Shared.Models.ApiResponse\u00601[[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "application/json"
-        ],
+        "Type": "System.Void",
+        "MediaTypes": [],
         "StatusCode": 200
       },
       {
-        "Type": "order_management_api_assessment.Shared.Models.ApiResponse\u00601[[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
         "MediaTypes": [
           "application/json"
         ],
         "StatusCode": 400
       },
       {
-        "Type": "order_management_api_assessment.Shared.Models.ApiResponse\u00601[[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
         "MediaTypes": [
           "application/json"
         ],
@@ -159,7 +155,7 @@
     ]
   },
   {
-    "ContainingType": "order_management_api_assessment.Controllers.OrderController",
+    "ContainingType": "order_management_api_assessment.Controllers.OrdersController",
     "Method": "GetOrderAnalytics",
     "RelativePath": "api/orders/analytics",
     "HttpMethod": "GET",
@@ -168,7 +164,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "order_management_api_assessment.Shared.Models.ApiResponse\u00601[[order_management_api_assessment.Features.Orders.Query.GetOrderAnalytics.OrderAnalyticsResponse, order-management-api-assessment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "order_management_api_assessment.DTOs.OrderAnalyticsResponse",
         "MediaTypes": [
           "application/json"
         ],

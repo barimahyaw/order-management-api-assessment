@@ -8,7 +8,7 @@
     "/api/orders": {
       "post": {
         "tags": [
-          "Order"
+          "Orders"
         ],
         "requestBody": {
           "content": {
@@ -31,21 +31,14 @@
         },
         "responses": {
           "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              }
-            }
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -57,7 +50,7 @@
       },
       "get": {
         "tags": [
-          "Order"
+          "Orders"
         ],
         "parameters": [
           {
@@ -92,7 +85,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrdersPagedResponseApiResponse"
+                  "$ref": "#/components/schemas/OrdersPagedResponse"
                 }
               }
             }
@@ -106,7 +99,7 @@
     "/api/orders/{orderId}/status": {
       "put": {
         "tags": [
-          "Order"
+          "Orders"
         ],
         "parameters": [
           {
@@ -140,21 +133,14 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ObjectApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ObjectApiResponse"
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -164,7 +150,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ObjectApiResponse"
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -178,7 +164,7 @@
     "/api/orders/{orderId}": {
       "get": {
         "tags": [
-          "Order"
+          "Orders"
         ],
         "parameters": [
           {
@@ -197,7 +183,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderResponseApiResponse"
+                  "$ref": "#/components/schemas/OrderResponse"
                 }
               }
             }
@@ -207,7 +193,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ObjectApiResponse"
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -221,7 +207,7 @@
     "/api/orders/analytics": {
       "get": {
         "tags": [
-          "Order"
+          "Orders"
         ],
         "responses": {
           "200": {
@@ -229,7 +215,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderAnalyticsResponseApiResponse"
+                  "$ref": "#/components/schemas/OrderAnalyticsResponse"
                 }
               }
             }
@@ -243,10 +229,6 @@
   },
   "components": {
     "schemas": {
-      "ApiResponse": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "CreateOrderRequest": {
         "type": "object",
         "properties": {
@@ -264,88 +246,26 @@
         },
         "additionalProperties": false
       },
-      "ObjectApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "nullable": true
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "OrderAnalyticsResponse": {
         "type": "object",
         "properties": {
-          "averageOrderValue": {
-            "type": "number",
-            "format": "double"
-          },
-          "averageFulfillmentTimeHours": {
-            "type": "number",
-            "format": "double"
-          },
           "totalOrders": {
             "type": "integer",
             "format": "int32"
           },
-          "pendingOrders": {
-            "type": "integer",
-            "format": "int32"
+          "totalRevenue": {
+            "type": "number",
+            "format": "double"
           },
-          "processingOrders": {
-            "type": "integer",
-            "format": "int32"
+          "averageOrderValue": {
+            "type": "number",
+            "format": "double"
           },
-          "shippedOrders": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "deliveredOrders": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "cancelledOrders": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "returnedOrders": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "OrderAnalyticsResponseApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/OrderAnalyticsResponse"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "string"
+          "ordersByStatus": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
             },
             "nullable": true
           }
@@ -434,29 +354,6 @@
         },
         "additionalProperties": false
       },
-      "OrderResponseApiResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/OrderResponse"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "OrderStatus": {
         "enum": [
           1,
@@ -500,10 +397,6 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
-          },
-          "itemCount": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -529,36 +422,36 @@
           "pageSize": {
             "type": "integer",
             "format": "int32"
-          },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
       },
-      "OrdersPagedResponseApiResponse": {
+      "ProblemDetails": {
         "type": "object",
         "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/OrdersPagedResponse"
-          },
-          "message": {
+          "type": {
             "type": "string",
             "nullable": true
           },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": { }
       },
       "UpdateOrderStatusRequest": {
         "type": "object",

@@ -1,39 +1,18 @@
-using FluentValidation;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
-using order_management_api_assessment.Features.Discounts;
-using order_management_api_assessment.Features.Discounts.Services;
-using order_management_api_assessment.Shared.Behaviors;
-using order_management_api_assessment.Shared.Data;
+using order_management_api_assessment.Data;
+using order_management_api_assessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Database
-builder.Services.AddDbContext<OrderManagementDbContext>(options =>
+builder.Services.AddDbContext<OrderContext>(options =>
     options.UseInMemoryDatabase("OrderManagementDb"));
 
-// MediatR with behaviors (order matters - validation first, then exception handling)
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
-    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ExceptionHandlingPipelineBehavior<,>));
-});
+// Services
+builder.Services.AddScoped<DiscountService>();
+builder.Services.AddScoped<OrderService>();
 
-// FluentValidation
-builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-
-// Memory Cache
-builder.Services.AddMemoryCache();
-
-// Discount Services
-builder.Services.AddScoped<IDiscountRule, FirstTimeBuyerDiscount>();
-builder.Services.AddScoped<IDiscountRule, BulkOrderDiscount>();
-builder.Services.AddScoped<IDiscountRule, VipCustomerDiscount>();
-builder.Services.AddScoped<IDiscountService, DiscountService>();
-
-// Add services to the container.
-
+// Controllers
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -41,18 +20,18 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "Order Management API", Version = "v1" });
 });
 
-
 var app = builder.Build();
 
 // Initialize database and seed data
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<OrderManagementDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<OrderContext>();
     try
     {
-        dbContext.Database.EnsureCreated();
-        app.Logger.LogInformation("Database initialized successfully with {OrderCount} orders and {CustomerCount} customers", 
-            dbContext.Orders.Count(), dbContext.Customers.Count());
+        context.Database.EnsureCreated();
+        await SeedData.InitializeAsync(context);
+        app.Logger.LogInformation("Database initialized successfully with {OrderCount} orders and {CustomerCount} customers",
+            context.Orders.Count(), context.Customers.Count());
     }
     catch (Exception ex)
     {
@@ -61,7 +40,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -69,9 +48,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
